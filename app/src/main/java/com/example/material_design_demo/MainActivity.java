@@ -1,5 +1,6 @@
 package com.example.material_design_demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                jump2Acivity(item.getItemId());
                 drawer_layout.closeDrawers();
                 return true;
             }
@@ -62,6 +64,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recycler_view.setLayoutManager(layoutManager);
         adapter = new FruitAdapter(fruitList);
         recycler_view.setAdapter(adapter);
+    }
+
+    private void jump2Acivity(int itemId) {
+
+        Intent intent = new Intent(this, TabLayoutActivity.class);
+
+        switch (itemId){
+            case R.id.nav_call:
+                intent.putExtra("position", 0);
+            break;
+            case R.id.nav_friends:
+                intent.putExtra("position", 1);
+                break;
+            case R.id.nav_location:
+                intent.putExtra("position", 2);
+                break;
+            case R.id.nav_mail:
+                intent.putExtra("position", 3);
+                break;
+            case R.id.nav_task:
+                intent.putExtra("position", 4);
+                break;
+        }
+
+        startActivity(intent);
     }
 
     private void initFruits() {
@@ -124,7 +151,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawer_layout.openDrawer(GravityCompat.START);
                 break;
             case R.id.backup:
-                Toast.makeText(this, "backup", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "backup", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, BottomNavigationActivity.class));
                 break;
             case R.id.delete:
                 Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
