@@ -107,6 +107,9 @@ public class TabLayoutActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return fragments.get(position).getArguments().getString("TAG");
+
+
+
         }
     }
 }
