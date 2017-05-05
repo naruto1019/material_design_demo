@@ -1,7 +1,6 @@
 package com.example.material_design_demo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,13 +17,25 @@ import java.util.List;
  * Created by 松峰 on 2017/4/30.
  */
 
-public class FruitAdapter extends RecyclerView.Adapter{
+public class FruitAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private Context context;
     private List<Fruit> fruitList;
-
     public FruitAdapter(List<Fruit> fruitList){
         this.fruitList = fruitList;
+    }
+
+    OnItemClickListener mOnItemClickListener;
+
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null){
+            mOnItemClickListener.onItemClick(v, (int)v.getTag());
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -47,17 +58,20 @@ public class FruitAdapter extends RecyclerView.Adapter{
         }
         View view = LayoutInflater.from(context).inflate(R.layout.fruit_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Fruit fruit = fruitList.get(position);
-                Intent intent = new Intent(context, FruitActivity.class);
-                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
-                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
-                context.startActivity(intent);
-            }
-        });
+//        holder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int position = holder.getAdapterPosition();
+//                Fruit fruit = fruitList.get(position);
+//                Intent intent = new Intent(context, FruitActivity.class);
+//                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
+//                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
+//                context.startActivity(intent);
+//            }
+//        });
+
+        view.setOnClickListener(this);
+
         return holder;
     }
 
@@ -67,10 +81,17 @@ public class FruitAdapter extends RecyclerView.Adapter{
         ViewHolder viewHolder = (ViewHolder)holder;
         viewHolder.fruitName.setText(fruit.getName());
         Glide.with(context).load(fruit.getImageId()).into(viewHolder.fruitImage);
+
+        viewHolder.cardView.setTag(position);
     }
 
     @Override
     public int getItemCount() {
         return fruitList.size();
     }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view, int position);
+    }
 }
+

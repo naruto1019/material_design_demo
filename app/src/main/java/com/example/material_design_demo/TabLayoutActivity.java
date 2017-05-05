@@ -109,5 +109,4 @@ public class TabLayoutActivity extends AppCompatActivity {
             return fragments.get(position).getArguments().getString("TAG");
         }
     }
-
 }

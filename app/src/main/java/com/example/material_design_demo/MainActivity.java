@@ -64,6 +64,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recycler_view.setLayoutManager(layoutManager);
         adapter = new FruitAdapter(fruitList);
         recycler_view.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new FruitAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Fruit fruit = fruitList.get(position);
+                Intent intent = new Intent(MainActivity.this, FruitActivity.class);
+                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
+                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void jump2Acivity(int itemId) {
