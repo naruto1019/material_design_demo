@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 测试同步代码
+ */
 public class TabLayoutActivity extends AppCompatActivity {
 
     private TabLayout mTabLayout;
