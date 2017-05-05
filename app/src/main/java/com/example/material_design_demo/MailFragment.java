@@ -28,4 +28,5 @@ public class MailFragment extends Fragment {
         mText = (TextView) view.findViewById(R.id.text);
         mText.setText("mail");
     }
+
 }
